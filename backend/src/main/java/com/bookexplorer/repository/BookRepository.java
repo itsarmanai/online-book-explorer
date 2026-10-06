@@ -37,19 +37,6 @@ public class BookDTO {
     public BookDTO() {
     }
 
-    public BookDTO(Long id, String bookName, String authorName, String isbn, String category,
-                  BigDecimal price, String description, Boolean available, String imageUrl) {
-        this.id = id;
-        this.bookName = bookName;
-        this.authorName = authorName;
-        this.isbn = isbn;
-        this.category = category;
-        this.price = price;
-        this.description = description;
-        this.available = available;
-        this.imageUrl = imageUrl;
-    }
-
     public Long getId() {
         return id;
     }

@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/books")
+@CrossOrigin(origins = "*")
 public class BookController {
 
     private final BookService bookService;
@@ -21,36 +22,37 @@ public class BookController {
 
     @GetMapping
     public ResponseEntity<List<BookDTO>> getAllBooks() {
-        return new ResponseEntity<>(List.of(), HttpStatus.OK);
+        return ResponseEntity.ok(bookService.getAllBooks());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<BookDTO> getBookById(@PathVariable Long id) {
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        return ResponseEntity.ok(bookService.getBookById(id));
     }
 
     @PostMapping
     public ResponseEntity<BookDTO> createBook(@Valid @RequestBody BookDTO bookDTO) {
-        return new ResponseEntity<>(null, HttpStatus.CREATED);
+        return new ResponseEntity<>(bookService.createBook(bookDTO), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<BookDTO> updateBook(@PathVariable Long id, @Valid @RequestBody BookDTO bookDTO) {
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        return ResponseEntity.ok(bookService.updateBook(id, bookDTO));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        bookService.deleteBook(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/category/{category}")
     public ResponseEntity<List<BookDTO>> getBooksByCategory(@PathVariable String category) {
-        return new ResponseEntity<>(List.of(), HttpStatus.OK);
+        return ResponseEntity.ok(bookService.getBooksByCategory(category));
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<BookDTO>> searchBooks(@RequestParam String keyword) {
-        return new ResponseEntity<>(List.of(), HttpStatus.OK);
+    public ResponseEntity<List<BookDTO>> searchBooks(@RequestParam(required = false) String keyword) {
+        return ResponseEntity.ok(bookService.searchBooks(keyword));
     }
 }
